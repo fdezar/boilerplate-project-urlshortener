@@ -20,10 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/public'));
 
-// app.use('/public', express.static(`${process.cwd()}/public`));
-
 app.get('/', function(req, res) {
-  // res.sendFile(process.cwd() + '/views/index.html');
   res.sendFile(__dirname + '/views/index.html');
 });
 
@@ -36,7 +33,7 @@ app.post('/api/shorturl', (req, res) => {
   try {
   const dnslookup = dns.lookup(urlparser.parse(url).hostname, async (err, address) => {
     if(!address || err) {
-      res.json({error: "invalid url"});
+      res.json({error: "invalid URL. Make sure your URL starts with https:// and has the correct format for correct parsing validation."});
     } else {
       const urlCount = await urls.countDocuments({})
       const urlDoc = {
@@ -45,22 +42,22 @@ app.post('/api/shorturl', (req, res) => {
     };
       const result = await urls.insertOne(urlDoc);
       console.log(result);
-      res.json({ original_url: url, short_url: urlCount });
+      res.json({ original_url: url, short_url: `url-sh.vercel.app/${urlCount}` });
       
     };
   });
    } catch (urlErr) {
-      res.json({ error: 'invalid url' }); // Invalid URL format
+      res.json({ error: 'invalid url' });
     }
 });
 
-app.get("/api/shorturl/:short_url", async (req, res) => {
+app.get("/:short_url", async (req, res) => {
   const shortUrl = +req.params.short_url;
   const urlDoc = await urls.findOne({ short_url: shortUrl });
     if (urlDoc) {
     res.redirect(urlDoc.url);
   } else {
-    res.json({ error: 'invalid url' }); // Short URL not found in the database
+    res.json({ error: 'invalid url' });
   }
 });
 
