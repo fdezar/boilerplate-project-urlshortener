@@ -22,7 +22,7 @@ URL Shortener Microservice is a web application that allows users to shorten lon
 
 1. Clone this repository:
 
-git clone https://github.com/your-username/url-shortener-microservice.git
+git clone https://github.com/fdezar/url-shortener-microservice.git
 
 2. Install dependencies:
 
