@@ -11,7 +11,6 @@ const client = new MongoClient(process.env.URL_DB);
 const db = client.db("urlshortener");
 const urls = db.collection("urls");
 
-// Basic Configuration
 const port = process.env.PORT || 3000;
 
 app.use(cors());
@@ -23,8 +22,6 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
-
-// Your first API endpoint
 
 app.post('/api/shorturl', (req, res) => {
   
