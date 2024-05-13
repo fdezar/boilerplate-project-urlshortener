@@ -15,6 +15,10 @@ a {
     border: #9b0408;
 }
 
+.btn-primary:hover {
+    background-color: #333;
+}
+
 .border-top-custom {
     border-top: 1px solid #333;
 }
